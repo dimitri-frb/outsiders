@@ -738,20 +738,38 @@
     border-color: var(--green-dark);
   }
 
-  .player-photo {
-    width: 80px;
-    height: 80px;
+  .player-photo-img {
+    width: 90px;
+    height: 90px;
     border-radius: 50%;
-    background: rgba(0, 255, 136, 0.06);
-    border: 1px solid var(--green-dark);
+    object-fit: cover;
+    object-position: center;
+    border: 2px solid var(--green-dark);
+    margin: 0 auto 14px;
+    display: block;
+    filter: grayscale(40%) brightness(0.85) contrast(1.1);
+    box-shadow: 0 0 15px var(--green-glow);
+    transition: filter 0.3s, box-shadow 0.3s;
+    animation: photo-glitch 8s infinite linear;
+  }
+
+  .player-photo-placeholder {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    border: 2px dashed var(--green-dark);
     margin: 0 auto 14px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: 'Orbitron', sans-serif;
-    font-size: 0.6rem;
+    font-size: 1.5rem;
     color: var(--green-dark);
-    letter-spacing: 1px;
+  }
+
+  .player-card:hover .player-photo-img {
+    filter: grayscale(20%) brightness(1) contrast(1.1);
+    box-shadow: 0 0 25px var(--green-glow);
   }
 
   .player-card h4 {
@@ -1124,7 +1142,7 @@
     <div class="closing-cta glitch" data-text="ON EST DIFFÉRENTS">ON EST DIFFÉRENTS</div>
 
     <div class="team-photo-wrap">
-      <img class="team-photo" src="img/on%20est%20diff%C3%A9rents.jpg" alt="Les Outsiders">
+      <img class="team-photo" src="img/team.jpg" alt="Les Outsiders">
     </div>
   </div>
 </section>
@@ -1186,18 +1204,32 @@
   });
 
   // Build roster cards
-  const players = ['Anrakyr','Cytrik','Immortus','Junkei','Kharn','Mani','Nazara','Night','Omegon','Peegee','Toyo','Wardak'];
+  const players = [
+    {name:'Anrakyr', img:'img/anrakyr.jpeg'},
+    {name:'Cytrik', img:'img/blood-angel.jpg'},
+    {name:'Immortus', img:'img/astra.jpeg'},
+    {name:'Junkei', img:''},
+    {name:'Kharn', img:'img/belakor.webp'},
+    {name:'Mani', img:'img/death-guard.jpeg'},
+    {name:'Nazara', img:'img/admech.webp'},
+    {name:'Night', img:'img/emperors-children.webp'},
+    {name:'Omegon', img:'img/eldar.webp'},
+    {name:'Peegee', img:'img/orks.jpg'},
+    {name:'Toyo', img:'img/custodes.jpeg'},
+    {name:'Wardak', img:'img/france.webp'}
+  ];
   const roles = ['Joueur Try Hard','Coach','Formation interne','Recrutement & Onboarding','Organisateur Scrims','Responsable Brand'];
   const grid = document.getElementById('roster-grid');
 
-  players.forEach(name => {
+  players.forEach(p => {
     const card = document.createElement('div');
     card.className = 'player-card';
     let selects = '';
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 2; i++) {
       selects += `<select onchange="this.classList.toggle('assigned',!!this.value);updatePlayerKRs()"><option value="">—</option>${roles.map(r => `<option>${r}</option>`).join('')}</select>`;
     }
-    card.innerHTML = `<div class="player-photo">PHOTO</div><h4>${name}</h4><div class="player-role-selects" data-player="${name}">${selects}</div><div class="player-krs" data-player="${name}" style="margin-top:8px;font-size:0.6rem;color:var(--text-dim);line-height:1.5;min-height:16px;"></div>`;
+    const photo = p.img ? `<img class="player-photo-img" src="${p.img}" alt="${p.name}">` : `<div class="player-photo-placeholder">?</div>`;
+    card.innerHTML = `${photo}<h4>${p.name}</h4><div class="player-role-selects" data-player="${p.name}">${selects}</div><div class="player-krs" data-player="${p.name}" style="margin-top:8px;font-size:0.6rem;color:var(--text-dim);line-height:1.5;min-height:16px;"></div>`;
     grid.appendChild(card);
   });
 
