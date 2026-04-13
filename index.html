@@ -347,6 +347,54 @@
     color: var(--text);
   }
 
+  .kr-assign {
+    display: flex;
+    gap: 6px;
+  }
+
+  /* Player role selects */
+  .player-role-selects {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 10px;
+  }
+
+  .player-role-selects select {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    background: rgba(0, 255, 136, 0.06);
+    color: var(--text-dim);
+    border: 1px solid rgba(0, 255, 136, 0.1);
+    padding: 4px 8px;
+    outline: none;
+    cursor: inherit;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23004d28'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 6px center;
+    padding-right: 20px;
+    width: 100%;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .player-role-selects select:hover,
+  .player-role-selects select:focus {
+    border-color: var(--green-dim);
+    color: var(--green);
+  }
+
+  .player-role-selects select.assigned {
+    color: var(--green);
+    border-color: var(--green-dim);
+  }
+
+  .player-role-selects select option {
+    background: #0a1a10;
+    color: var(--text);
+  }
+
   /* Role cards */
   .roles-grid {
     display: grid;
@@ -588,6 +636,47 @@
     letter-spacing: 4px;
   }
 
+  /* Team photo */
+  .team-photo-wrap {
+    margin-top: 40px;
+    position: relative;
+    display: inline-block;
+  }
+
+  .team-photo {
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+    border: 2px solid var(--green-dark);
+    box-shadow: 0 0 30px var(--green-glow), 0 0 60px rgba(0,255,136,0.08);
+    filter: grayscale(60%) brightness(0.9) contrast(1.1);
+    mix-blend-mode: normal;
+    position: relative;
+    animation: photo-glitch 6s infinite linear;
+  }
+
+  .team-photo-wrap::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 50%;
+    border: 1px solid var(--green);
+    opacity: 0.3;
+    box-shadow: 0 0 20px var(--green-glow);
+  }
+
+  @keyframes photo-glitch {
+    0%, 95%, 100% { filter: grayscale(60%) brightness(0.9) contrast(1.1); transform: translate(0); }
+    96% { filter: grayscale(60%) brightness(0.9) contrast(1.1) hue-rotate(90deg); transform: translate(2px, -1px); }
+    97% { filter: grayscale(30%) brightness(1.1) contrast(1.2) hue-rotate(180deg); transform: translate(-2px, 1px); }
+    98% { filter: grayscale(60%) brightness(0.9) contrast(1.1) hue-rotate(270deg); transform: translate(1px, 2px); }
+  }
+
   /* Note callout */
   .note {
     font-size: 0.78rem;
@@ -630,6 +719,55 @@
     font-weight: 700;
   }
 
+  /* Player cards */
+  .players-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 16px;
+  }
+
+  .player-card {
+    background: var(--bg-card);
+    border: 1px solid rgba(0, 255, 136, 0.08);
+    padding: 20px 16px;
+    text-align: center;
+    transition: border-color 0.3s ease;
+  }
+
+  .player-card:hover {
+    border-color: var(--green-dark);
+  }
+
+  .player-photo {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: rgba(0, 255, 136, 0.06);
+    border: 1px solid var(--green-dark);
+    margin: 0 auto 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.6rem;
+    color: var(--green-dark);
+    letter-spacing: 1px;
+  }
+
+  .player-card h4 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.85rem;
+    color: var(--green);
+    margin-bottom: 8px;
+  }
+
+  .player-roles {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    line-height: 1.6;
+    min-height: 20px;
+  }
+
   /* Responsive */
   @media (max-width: 600px) {
     section { padding: 60px 20px; }
@@ -648,7 +786,7 @@
   <div class="section-inner">
     <div class="hero-label">Outsiders</div>
     <h1 class="hero-title glitch" data-text="Saison 2027, To The Moon">Saison 2027, To The Moon</h1>
-    <p class="hero-subtitle">Reunion de lancement</p>
+    <p class="hero-subtitle">Réunion de lancement</p>
     <p class="hero-date">Avril 2026</p>
   </div>
 </section>
@@ -663,28 +801,28 @@
       <h3>Points forts</h3>
       <ul>
         <li>Victoire(s) face aux Tacles</li>
-        <li>Premiere place au match aller</li>
+        <li>Première place au match aller</li>
         <li>Recrutements et nouveaux &lt;3</li>
-        <li>Esprit d'equipe</li>
+        <li>Esprit d'équipe</li>
         <li>Wardak en EDF &#128123;</li>
       </ul>
     </div>
 
     <div class="content-block">
-      <h3>Axes d'amelioration</h3>
+      <h3>Axes d'amélioration</h3>
       <ul>
-        <li>Cohesion interne</li>
+        <li>Cohésion interne</li>
         <li>Connaissance roster / matrices</li>
-        <li>Regularite en ligue</li>
-        <li>Differences de preparation et d'engagement entre les membres</li>
+        <li>Régularité en ligue</li>
+        <li>Différences de préparation et d'engagement entre les membres</li>
         <li>Coaching en amont</li>
-        <li>Integration et montee en puissance de chacun individuellement</li>
+        <li>Intégration et montée en puissance de chacun individuellement</li>
       </ul>
     </div>
 
     <div class="content-block" style="border-left-color: var(--green);">
       <h3>Conclusion</h3>
-      <p>Malgre la deception du match retour, l'objectif du maintien en L2 est atteint. Le socle est solide pour la suite. On sait ou on en est, on sait ou on va.</p>
+      <p>Malgré la déception du match retour, l'objectif du maintien en L2 est atteint. Le socle est solide pour la suite. On sait où on en est, on sait où on va.</p>
     </div>
   </div>
 </section>
@@ -698,18 +836,18 @@
     <div class="content-block">
       <h3>L'objectif</h3>
       <ul>
-        <li>Montee en L1</li>
+        <li>Montée en L1</li>
       </ul>
     </div>
 
     <div class="content-block">
       <h3>Pourquoi maintenant</h3>
-      <p>Le timing est bon. Le roster est bon. La dynamique est bonne. Tout est aligne pour pousser.</p>
+      <p>Le timing est bon. Le roster est bon. La dynamique est bonne. Tout est aligné pour pousser.</p>
     </div>
 
     <div class="content-block">
       <h3>L'esprit Outsiders</h3>
-      <p>C'est notre fil rouge. Pas de copie meta, pas de suivisme. Des concepts penses pour gagner, a notre maniere. On joue comme personne d'autre ne joue.</p>
+      <p>C'est notre fil rouge. Pas de copie méta, pas de suivisme. Des concepts pensés pour gagner, à notre manière. On joue comme personne d'autre ne joue.</p>
     </div>
   </div>
 </section>
@@ -718,24 +856,24 @@
 <section>
   <div class="section-inner">
     <p class="section-tag">// Roadmap</p>
-    <h2 class="section-title glitch" data-text="La strategie">La strategie</h2>
+    <h2 class="section-title glitch" data-text="La stratégie">La stratégie</h2>
 
     <div class="orgchart">
-      <div class="org-root">Montee en L1</div>
+      <div class="org-root">Montée en L1</div>
       <div class="org-line-down"></div>
       <div class="org-line-h"></div>
       <div class="org-branches">
         <div class="org-branch">
           <div class="org-branch-line"></div>
-          <div class="org-okr"><strong>OKR 1</strong>Un roster d'elite a 14</div>
+          <div class="org-okr"><strong>OKR 1</strong>Un roster d'élite à 14</div>
           <div class="org-krs">
             <div class="org-kr">
               <div class="org-kr-line"></div>
-              <div class="org-kr-item">Roles et responsabilites</div>
+              <div class="org-kr-item">Rôles et responsabilités</div>
               <div class="org-kr-line"></div>
               <div class="org-kr-item">Recrutement</div>
               <div class="org-kr-line"></div>
-              <div class="org-kr-item">Integration et formation</div>
+              <div class="org-kr-item">Intégration et formation</div>
               <div class="org-kr-line"></div>
               <div class="org-kr-item">Coach externe</div>
             </div>
@@ -759,11 +897,11 @@
         </div>
         <div class="org-branch">
           <div class="org-branch-line"></div>
-          <div class="org-okr"><strong>OKR 3</strong>Une identite forte</div>
+          <div class="org-okr"><strong>OKR 3</strong>Une identité forte</div>
           <div class="org-krs">
             <div class="org-kr">
               <div class="org-kr-line"></div>
-              <div class="org-kr-item">Identite visuelle</div>
+              <div class="org-kr-item">Identité visuelle</div>
               <div class="org-kr-line"></div>
               <div class="org-kr-item">Merch</div>
               <div class="org-kr-line"></div>
@@ -782,29 +920,29 @@
 <section>
   <div class="section-inner">
     <p class="section-tag">// OKR 1</p>
-    <h2 class="section-title">Un roster d'elite a 14</h2>
+    <h2 class="section-title">Un roster d'élite à 14</h2>
 
     <div class="content-block">
       <h3>Key Results</h3>
       <div class="kr-item">
         <span class="kr-label">KR1</span>
-        <span class="kr-text">Chacun a un role et des responsabilites cle dans la team</span>
-        <div class="kr-assign"><select onchange="this.classList.toggle('assigned',this.value)"><option value="">--</option><option>Anrakyr</option><option>Cytrik</option><option>Immortus</option><option>Kharn</option><option>Mani</option><option>Nazara</option><option>Night</option><option>Omegon</option><option>Peegee</option><option>Toyo</option><option>Wardak</option></select></div>
+        <span class="kr-text">Définir les rôles et responsabilités dans la team</span>
+        <div class="kr-assign"><select onchange="this.classList.toggle('assigned',this.value);updatePlayerRoles()"><option value="">--</option><option>Anrakyr</option><option>Cytrik</option><option>Immortus</option><option>Junkei</option><option>Kharn</option><option>Mani</option><option>Nazara</option><option>Night</option><option>Omegon</option><option>Peegee</option><option>Toyo</option><option>Wardak</option></select><select onchange="this.classList.toggle('assigned',this.value);updatePlayerRoles()"><option value="">--</option><option>Anrakyr</option><option>Cytrik</option><option>Immortus</option><option>Junkei</option><option>Kharn</option><option>Mani</option><option>Nazara</option><option>Night</option><option>Omegon</option><option>Peegee</option><option>Toyo</option><option>Wardak</option></select></div>
       </div>
       <div class="kr-item">
         <span class="kr-label">KR2</span>
         <span class="kr-text">Recruter X nouveaux membres pour la saison prochaine</span>
-        <div class="kr-assign"><select onchange="this.classList.toggle('assigned',this.value)"><option value="">--</option><option>Anrakyr</option><option>Cytrik</option><option>Immortus</option><option>Kharn</option><option>Mani</option><option>Nazara</option><option>Night</option><option>Omegon</option><option>Peegee</option><option>Toyo</option><option>Wardak</option></select></div>
+        <div class="kr-assign"><select onchange="this.classList.toggle('assigned',this.value);updatePlayerRoles()"><option value="">--</option><option>Anrakyr</option><option>Cytrik</option><option>Immortus</option><option>Junkei</option><option>Kharn</option><option>Mani</option><option>Nazara</option><option>Night</option><option>Omegon</option><option>Peegee</option><option>Toyo</option><option>Wardak</option></select><select onchange="this.classList.toggle('assigned',this.value);updatePlayerRoles()"><option value="">--</option><option>Anrakyr</option><option>Cytrik</option><option>Immortus</option><option>Junkei</option><option>Kharn</option><option>Mani</option><option>Nazara</option><option>Night</option><option>Omegon</option><option>Peegee</option><option>Toyo</option><option>Wardak</option></select></div>
       </div>
       <div class="kr-item">
         <span class="kr-label">KR3</span>
-        <span class="kr-text">Mettre en place un process d'integration et de formation des nouveaux</span>
-        <div class="kr-assign"><select onchange="this.classList.toggle('assigned',this.value)"><option value="">--</option><option>Anrakyr</option><option>Cytrik</option><option>Immortus</option><option>Kharn</option><option>Mani</option><option>Nazara</option><option>Night</option><option>Omegon</option><option>Peegee</option><option>Toyo</option><option>Wardak</option></select></div>
+        <span class="kr-text">Mettre en place un process d'intégration et de formation des nouveaux</span>
+        <div class="kr-assign"><select onchange="this.classList.toggle('assigned',this.value);updatePlayerRoles()"><option value="">--</option><option>Anrakyr</option><option>Cytrik</option><option>Immortus</option><option>Junkei</option><option>Kharn</option><option>Mani</option><option>Nazara</option><option>Night</option><option>Omegon</option><option>Peegee</option><option>Toyo</option><option>Wardak</option></select><select onchange="this.classList.toggle('assigned',this.value);updatePlayerRoles()"><option value="">--</option><option>Anrakyr</option><option>Cytrik</option><option>Immortus</option><option>Junkei</option><option>Kharn</option><option>Mani</option><option>Nazara</option><option>Night</option><option>Omegon</option><option>Peegee</option><option>Toyo</option><option>Wardak</option></select></div>
       </div>
       <div class="kr-item">
         <span class="kr-label">KR4</span>
-        <span class="kr-text">Trouver un coach externe et focus sur ce role</span>
-        <div class="kr-assign"><select onchange="this.classList.toggle('assigned',this.value)"><option value="">--</option><option>Anrakyr</option><option>Cytrik</option><option>Immortus</option><option>Kharn</option><option>Mani</option><option>Nazara</option><option>Night</option><option>Omegon</option><option>Peegee</option><option>Toyo</option><option>Wardak</option></select></div>
+        <span class="kr-text">Trouver un coach externe et focus sur ce rôle</span>
+        <div class="kr-assign"><select onchange="this.classList.toggle('assigned',this.value);updatePlayerRoles()"><option value="">--</option><option>Anrakyr</option><option>Cytrik</option><option>Immortus</option><option>Junkei</option><option>Kharn</option><option>Mani</option><option>Nazara</option><option>Night</option><option>Omegon</option><option>Peegee</option><option>Toyo</option><option>Wardak</option></select><select onchange="this.classList.toggle('assigned',this.value);updatePlayerRoles()"><option value="">--</option><option>Anrakyr</option><option>Cytrik</option><option>Immortus</option><option>Junkei</option><option>Kharn</option><option>Mani</option><option>Nazara</option><option>Night</option><option>Omegon</option><option>Peegee</option><option>Toyo</option><option>Wardak</option></select></div>
       </div>
     </div>
   </div>
@@ -820,31 +958,36 @@
       <div class="role-card">
         <div class="role-icon">[ 01 ]</div>
         <h4>Joueur Try Hard</h4>
-        <p>Focus jeu et resultats. Le coeur du roster competitif.</p>
+        <p>Focus jeu et résultats. Le cœur du roster compétitif.</p>
       </div>
       <div class="role-card">
         <div class="role-icon">[ 02 ]</div>
         <h4>Coach</h4>
-        <p>Analyse et accompagnement. Lecture du jeu et strategie.</p>
+        <p>Analyse et accompagnement. Lecture du jeu, stratégie et analyse méta.</p>
       </div>
       <div class="role-card">
         <div class="role-icon">[ 03 ]</div>
-        <h4>Formateur</h4>
-        <p>Training des nouveaux. Transmission du savoir-faire.</p>
+        <h4>Formation interne</h4>
+        <p>Training et montée en compétence des membres.</p>
       </div>
       <div class="role-card">
         <div class="role-icon">[ 04 ]</div>
-        <h4>Organisateur Scrims</h4>
-        <p>Planning et coordination. Le lien logistique de l'equipe.</p>
+        <h4>Recrutement & Onboarding</h4>
+        <p>Recrutement de nouveaux membres et intégration.</p>
       </div>
       <div class="role-card">
         <div class="role-icon">[ 05 ]</div>
-        <h4>Responsable Merch</h4>
-        <p>Identite visuelle et goodies. L'image des Outsiders.</p>
+        <h4>Organisateur Scrims</h4>
+        <p>Planning et coordination. Le lien logistique de l'équipe.</p>
+      </div>
+      <div class="role-card">
+        <div class="role-icon">[ 06 ]</div>
+        <h4>Responsable Brand</h4>
+        <p>Identité visuelle, merch et image des Outsiders.</p>
       </div>
     </div>
 
-    <p class="note">Roles cumulables et evolutifs. Un joueur peut porter plusieurs casquettes.</p>
+    <p class="note">Rôles cumulables et évolutifs. Un joueur peut porter plusieurs casquettes.</p>
   </div>
 </section>
 
@@ -858,23 +1001,23 @@
       <h3>Key Results</h3>
       <div class="kr-item">
         <span class="kr-label">KR1</span>
-        <span class="kr-text">100% des parties ont un retex poste sur Discord</span>
-        <div class="kr-assign"><select onchange="this.classList.toggle('assigned',this.value)"><option value="">--</option><option>Anrakyr</option><option>Cytrik</option><option>Immortus</option><option>Kharn</option><option>Mani</option><option>Nazara</option><option>Night</option><option>Omegon</option><option>Peegee</option><option>Toyo</option><option>Wardak</option></select></div>
+        <span class="kr-text">100% des parties ont un retex posté sur Discord</span>
+        <div class="kr-assign"><select onchange="this.classList.toggle('assigned',this.value);updatePlayerRoles()"><option value="">--</option><option>Anrakyr</option><option>Cytrik</option><option>Immortus</option><option>Junkei</option><option>Kharn</option><option>Mani</option><option>Nazara</option><option>Night</option><option>Omegon</option><option>Peegee</option><option>Toyo</option><option>Wardak</option></select><select onchange="this.classList.toggle('assigned',this.value);updatePlayerRoles()"><option value="">--</option><option>Anrakyr</option><option>Cytrik</option><option>Immortus</option><option>Junkei</option><option>Kharn</option><option>Mani</option><option>Nazara</option><option>Night</option><option>Omegon</option><option>Peegee</option><option>Toyo</option><option>Wardak</option></select></div>
       </div>
       <div class="kr-item">
         <span class="kr-label">KR2</span>
         <span class="kr-text">Organiser au moins deux sessions de training par mois</span>
-        <div class="kr-assign"><select onchange="this.classList.toggle('assigned',this.value)"><option value="">--</option><option>Anrakyr</option><option>Cytrik</option><option>Immortus</option><option>Kharn</option><option>Mani</option><option>Nazara</option><option>Night</option><option>Omegon</option><option>Peegee</option><option>Toyo</option><option>Wardak</option></select></div>
+        <div class="kr-assign"><select onchange="this.classList.toggle('assigned',this.value);updatePlayerRoles()"><option value="">--</option><option>Anrakyr</option><option>Cytrik</option><option>Immortus</option><option>Junkei</option><option>Kharn</option><option>Mani</option><option>Nazara</option><option>Night</option><option>Omegon</option><option>Peegee</option><option>Toyo</option><option>Wardak</option></select><select onchange="this.classList.toggle('assigned',this.value);updatePlayerRoles()"><option value="">--</option><option>Anrakyr</option><option>Cytrik</option><option>Immortus</option><option>Junkei</option><option>Kharn</option><option>Mani</option><option>Nazara</option><option>Night</option><option>Omegon</option><option>Peegee</option><option>Toyo</option><option>Wardak</option></select></div>
       </div>
       <div class="kr-item">
         <span class="kr-label">KR3</span>
         <span class="kr-text">Au moins deux parties entre membres par mois</span>
-        <div class="kr-assign"><select onchange="this.classList.toggle('assigned',this.value)"><option value="">--</option><option>Anrakyr</option><option>Cytrik</option><option>Immortus</option><option>Kharn</option><option>Mani</option><option>Nazara</option><option>Night</option><option>Omegon</option><option>Peegee</option><option>Toyo</option><option>Wardak</option></select></div>
+        <div class="kr-assign"><select onchange="this.classList.toggle('assigned',this.value);updatePlayerRoles()"><option value="">--</option><option>Anrakyr</option><option>Cytrik</option><option>Immortus</option><option>Junkei</option><option>Kharn</option><option>Mani</option><option>Nazara</option><option>Night</option><option>Omegon</option><option>Peegee</option><option>Toyo</option><option>Wardak</option></select><select onchange="this.classList.toggle('assigned',this.value);updatePlayerRoles()"><option value="">--</option><option>Anrakyr</option><option>Cytrik</option><option>Immortus</option><option>Junkei</option><option>Kharn</option><option>Mani</option><option>Nazara</option><option>Night</option><option>Omegon</option><option>Peegee</option><option>Toyo</option><option>Wardak</option></select></div>
       </div>
       <div class="kr-item">
         <span class="kr-label">KR4</span>
-        <span class="kr-text">Chacun participe au moins a un tournoi par mois</span>
-        <div class="kr-assign"><select onchange="this.classList.toggle('assigned',this.value)"><option value="">--</option><option>Anrakyr</option><option>Cytrik</option><option>Immortus</option><option>Kharn</option><option>Mani</option><option>Nazara</option><option>Night</option><option>Omegon</option><option>Peegee</option><option>Toyo</option><option>Wardak</option></select></div>
+        <span class="kr-text">Chacun participe au moins à un tournoi par mois</span>
+        <div class="kr-assign"><select onchange="this.classList.toggle('assigned',this.value);updatePlayerRoles()"><option value="">--</option><option>Anrakyr</option><option>Cytrik</option><option>Immortus</option><option>Junkei</option><option>Kharn</option><option>Mani</option><option>Nazara</option><option>Night</option><option>Omegon</option><option>Peegee</option><option>Toyo</option><option>Wardak</option></select><select onchange="this.classList.toggle('assigned',this.value);updatePlayerRoles()"><option value="">--</option><option>Anrakyr</option><option>Cytrik</option><option>Immortus</option><option>Junkei</option><option>Kharn</option><option>Mani</option><option>Nazara</option><option>Night</option><option>Omegon</option><option>Peegee</option><option>Toyo</option><option>Wardak</option></select></div>
       </div>
     </div>
   </div>
@@ -887,23 +1030,23 @@
     <h2 class="section-title glitch" data-text="On apprend de chaque partie">On apprend de chaque partie</h2>
 
     <div class="content-block">
-      <h3>La regle</h3>
-      <p>Toute partie jouee = un retex sur Discord. Pas d'exception.</p>
+      <h3>La règle</h3>
+      <p>Toute partie jouée = un retex sur Discord. Pas d'exception.</p>
     </div>
 
     <div class="retex-format">
-      <div class="retex-line"><span>&gt;</span> Resultat</div>
-      <div class="retex-line"><span>&gt;</span> Moment cle</div>
-      <div class="retex-line"><span>&gt;</span> Ce que j'aurais du faire</div>
+      <div class="retex-line"><span>&gt;</span> Résultat</div>
+      <div class="retex-line"><span>&gt;</span> Moment clé</div>
+      <div class="retex-line"><span>&gt;</span> Ce que j'aurais dû faire</div>
       <div class="retex-line"><span>&gt;</span> Ce que je retiens</div>
     </div>
 
     <div class="content-block" style="margin-top: 20px;">
       <h3>Pourquoi</h3>
       <ul>
-        <li>Memoire collective</li>
-        <li>Progression acceleree</li>
-        <li>Cohesion renforcee</li>
+        <li>Mémoire collective</li>
+        <li>Progression accélérée</li>
+        <li>Cohésion renforcée</li>
       </ul>
     </div>
 
@@ -915,29 +1058,29 @@
 <section>
   <div class="section-inner">
     <p class="section-tag">// OKR 3</p>
-    <h2 class="section-title">Les Outsiders, une identite</h2>
+    <h2 class="section-title">Les Outsiders, une identité</h2>
 
     <div class="content-block">
       <h3>Key Results</h3>
       <div class="kr-item">
         <span class="kr-label">KR1</span>
-        <span class="kr-text">Refaire l'identite visuelle : logo, couleurs, charte, etc</span>
-        <div class="kr-assign"><select onchange="this.classList.toggle('assigned',this.value)"><option value="">--</option><option>Anrakyr</option><option>Cytrik</option><option>Immortus</option><option>Kharn</option><option>Mani</option><option>Nazara</option><option>Night</option><option>Omegon</option><option>Peegee</option><option>Toyo</option><option>Wardak</option></select></div>
+        <span class="kr-text">Refaire l'identité visuelle : logo, couleurs, charte, etc</span>
+        <div class="kr-assign"><select onchange="this.classList.toggle('assigned',this.value);updatePlayerRoles()"><option value="">--</option><option>Anrakyr</option><option>Cytrik</option><option>Immortus</option><option>Junkei</option><option>Kharn</option><option>Mani</option><option>Nazara</option><option>Night</option><option>Omegon</option><option>Peegee</option><option>Toyo</option><option>Wardak</option></select><select onchange="this.classList.toggle('assigned',this.value);updatePlayerRoles()"><option value="">--</option><option>Anrakyr</option><option>Cytrik</option><option>Immortus</option><option>Junkei</option><option>Kharn</option><option>Mani</option><option>Nazara</option><option>Night</option><option>Omegon</option><option>Peegee</option><option>Toyo</option><option>Wardak</option></select></div>
       </div>
       <div class="kr-item">
         <span class="kr-label">KR2</span>
-        <span class="kr-text">Lancer le merch : maillots, casquettes, des, tapis, etc</span>
-        <div class="kr-assign"><select onchange="this.classList.toggle('assigned',this.value)"><option value="">--</option><option>Anrakyr</option><option>Cytrik</option><option>Immortus</option><option>Kharn</option><option>Mani</option><option>Nazara</option><option>Night</option><option>Omegon</option><option>Peegee</option><option>Toyo</option><option>Wardak</option></select></div>
+        <span class="kr-text">Lancer le merch : maillots, casquettes, dés, tapis, etc</span>
+        <div class="kr-assign"><select onchange="this.classList.toggle('assigned',this.value);updatePlayerRoles()"><option value="">--</option><option>Anrakyr</option><option>Cytrik</option><option>Immortus</option><option>Junkei</option><option>Kharn</option><option>Mani</option><option>Nazara</option><option>Night</option><option>Omegon</option><option>Peegee</option><option>Toyo</option><option>Wardak</option></select><select onchange="this.classList.toggle('assigned',this.value);updatePlayerRoles()"><option value="">--</option><option>Anrakyr</option><option>Cytrik</option><option>Immortus</option><option>Junkei</option><option>Kharn</option><option>Mani</option><option>Nazara</option><option>Night</option><option>Omegon</option><option>Peegee</option><option>Toyo</option><option>Wardak</option></select></div>
       </div>
       <div class="kr-item">
         <span class="kr-label">KR3</span>
         <span class="kr-text">Revoir l'organisation du Discord</span>
-        <div class="kr-assign"><select onchange="this.classList.toggle('assigned',this.value)"><option value="">--</option><option>Anrakyr</option><option>Cytrik</option><option>Immortus</option><option>Kharn</option><option>Mani</option><option>Nazara</option><option>Night</option><option>Omegon</option><option>Peegee</option><option>Toyo</option><option>Wardak</option></select></div>
+        <div class="kr-assign"><select onchange="this.classList.toggle('assigned',this.value);updatePlayerRoles()"><option value="">--</option><option>Anrakyr</option><option>Cytrik</option><option>Immortus</option><option>Junkei</option><option>Kharn</option><option>Mani</option><option>Nazara</option><option>Night</option><option>Omegon</option><option>Peegee</option><option>Toyo</option><option>Wardak</option></select><select onchange="this.classList.toggle('assigned',this.value);updatePlayerRoles()"><option value="">--</option><option>Anrakyr</option><option>Cytrik</option><option>Immortus</option><option>Junkei</option><option>Kharn</option><option>Mani</option><option>Nazara</option><option>Night</option><option>Omegon</option><option>Peegee</option><option>Toyo</option><option>Wardak</option></select></div>
       </div>
       <div class="kr-item">
         <span class="kr-label">KR4</span>
         <span class="kr-text">Creer des outils pour progresser et aller plus vite</span>
-        <div class="kr-assign"><select onchange="this.classList.toggle('assigned',this.value)"><option value="">--</option><option>Anrakyr</option><option>Cytrik</option><option>Immortus</option><option>Kharn</option><option>Mani</option><option>Nazara</option><option>Night</option><option>Omegon</option><option>Peegee</option><option>Toyo</option><option>Wardak</option></select></div>
+        <div class="kr-assign"><select onchange="this.classList.toggle('assigned',this.value);updatePlayerRoles()"><option value="">--</option><option>Anrakyr</option><option>Cytrik</option><option>Immortus</option><option>Junkei</option><option>Kharn</option><option>Mani</option><option>Nazara</option><option>Night</option><option>Omegon</option><option>Peegee</option><option>Toyo</option><option>Wardak</option></select><select onchange="this.classList.toggle('assigned',this.value);updatePlayerRoles()"><option value="">--</option><option>Anrakyr</option><option>Cytrik</option><option>Immortus</option><option>Junkei</option><option>Kharn</option><option>Mani</option><option>Nazara</option><option>Night</option><option>Omegon</option><option>Peegee</option><option>Toyo</option><option>Wardak</option></select></div>
       </div>
     </div>
   </div>
@@ -951,12 +1094,12 @@
 
     <div class="tools-row">
       <div class="tool-card">
-        <h4>Pairings</h4>
-        <p>Gestion des appariements. Utilise par le capitaine pour optimiser les matchups table par table.</p>
+        <h4>Matrice 2.0</h4>
+        <p>Un outil pour faire les matrices en préparation des events.</p>
       </div>
       <div class="tool-card">
-        <h4>Suivi Estimes</h4>
-        <p>Scores estimes table par table en temps reel. Ajuster la strategie en cours de match.</p>
+        <h4>Suivi des games</h4>
+        <p>Un outil pour suivre les games, la perf et alimenter la master matrice en temps réel.</p>
       </div>
     </div>
   </div>
@@ -966,10 +1109,10 @@
 <section id="closing">
   <div class="section-inner">
     <p class="section-tag">// Closing</p>
-    <h2 class="section-title glitch" data-text="Ca commence maintenant">Ca commence maintenant</h2>
+    <h2 class="section-title glitch" data-text="Ça commence maintenant">Ça commence maintenant</h2>
 
     <ul class="closing-lines">
-      <li>On prepare la nouvelle saison.</li>
+      <li>On prépare la nouvelle saison.</li>
       <li>Un seul objectif : la L1.</li>
       <li>Chaque partie compte.</li>
       <li>Chaque retex compte.</li>
@@ -978,7 +1121,11 @@
 
     <div class="section-divider" style="margin: 30px auto;"></div>
 
-    <div class="closing-cta glitch" data-text="LET'S GO OUTSIDERS">LET'S GO OUTSIDERS</div>
+    <div class="closing-cta glitch" data-text="ON EST DIFFÉRENTS">ON EST DIFFÉRENTS</div>
+
+    <div class="team-photo-wrap">
+      <img class="team-photo" src="img/on%20est%20diff%C3%A9rents.jpg" alt="Les Outsiders">
+    </div>
   </div>
 </section>
 
@@ -986,17 +1133,27 @@
 <section>
   <div class="section-inner">
     <p class="section-tag">// Tour de table</p>
-    <h2 class="section-title glitch" data-text="Et toi, t'es ou ?">Et toi, t'es ou ?</h2>
+    <h2 class="section-title glitch" data-text="Et toi, t'es où ?">Et toi, t'es où ?</h2>
 
     <ul class="questions-list">
       <li>La vision te parle ?</li>
       <li>A quel niveau tu veux t'engager ?</li>
-      <li>Quel role te correspond ?</li>
+      <li>Quel rôle te correspond ?</li>
     </ul>
 
     <div class="content-block" style="margin-top: 30px; text-align: center;">
       <p>Objectif : tout le monde repart avec une case claire.</p>
     </div>
+  </div>
+</section>
+
+<!-- SECTION 13: ROSTER -->
+<section>
+  <div class="section-inner">
+    <p class="section-tag">// Le roster</p>
+    <h2 class="section-title glitch" data-text="Les Outsiders">Les Outsiders</h2>
+
+    <div class="players-grid" id="roster-grid"></div>
   </div>
 </section>
 
@@ -1027,6 +1184,42 @@
   document.querySelectorAll('.section-inner').forEach(el => {
     observer.observe(el);
   });
+
+  // Build roster cards
+  const players = ['Anrakyr','Cytrik','Immortus','Junkei','Kharn','Mani','Nazara','Night','Omegon','Peegee','Toyo','Wardak'];
+  const roles = ['Joueur Try Hard','Coach','Formation interne','Recrutement & Onboarding','Organisateur Scrims','Responsable Brand'];
+  const grid = document.getElementById('roster-grid');
+
+  players.forEach(name => {
+    const card = document.createElement('div');
+    card.className = 'player-card';
+    let selects = '';
+    for (let i = 0; i < 3; i++) {
+      selects += `<select onchange="this.classList.toggle('assigned',!!this.value);updatePlayerKRs()"><option value="">—</option>${roles.map(r => `<option>${r}</option>`).join('')}</select>`;
+    }
+    card.innerHTML = `<div class="player-photo">PHOTO</div><h4>${name}</h4><div class="player-role-selects" data-player="${name}">${selects}</div><div class="player-krs" data-player="${name}" style="margin-top:8px;font-size:0.6rem;color:var(--text-dim);line-height:1.5;min-height:16px;"></div>`;
+    grid.appendChild(card);
+  });
+
+  // Sync KR assignments to player cards
+  function updatePlayerKRs() {
+    const assigned = {};
+    document.querySelectorAll('.kr-assign select').forEach(sel => {
+      if (sel.value) {
+        const krText = sel.closest('.kr-item').querySelector('.kr-text').textContent.trim();
+        if (!assigned[sel.value]) assigned[sel.value] = [];
+        assigned[sel.value].push(krText);
+      }
+    });
+    document.querySelectorAll('.player-krs').forEach(el => {
+      const name = el.dataset.player;
+      const krs = assigned[name] || [];
+      el.innerHTML = krs.length ? krs.map(k => `<div style="border-left:1px solid var(--green-dark);padding-left:6px;margin-top:4px;">${k}</div>`).join('') : '';
+    });
+  }
+
+  function updatePlayerRoles() { updatePlayerKRs(); }
+  updatePlayerKRs();
 </script>
 
 </body>
