@@ -1251,7 +1251,46 @@
   }
 
   function updatePlayerRoles() { updatePlayerKRs(); }
-  updatePlayerKRs();
+
+  // Persistence via localStorage
+  const STORAGE_KEY = 'outsiders-2027';
+
+  function saveState() {
+    const state = { kr: [], roles: [] };
+    document.querySelectorAll('.kr-assign select').forEach((sel, i) => {
+      state.kr[i] = sel.value;
+    });
+    document.querySelectorAll('.player-role-selects select').forEach((sel, i) => {
+      state.roles[i] = sel.value;
+    });
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }
+
+  function loadState() {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+    try {
+      const state = JSON.parse(raw);
+      if (state.kr) {
+        document.querySelectorAll('.kr-assign select').forEach((sel, i) => {
+          if (state.kr[i]) { sel.value = state.kr[i]; sel.classList.add('assigned'); }
+        });
+      }
+      if (state.roles) {
+        document.querySelectorAll('.player-role-selects select').forEach((sel, i) => {
+          if (state.roles[i]) { sel.value = state.roles[i]; sel.classList.add('assigned'); }
+        });
+      }
+      updatePlayerKRs();
+    } catch(e) {}
+  }
+
+  // Attach save on every select change
+  document.querySelectorAll('.kr-assign select, .player-role-selects select').forEach(sel => {
+    sel.addEventListener('change', saveState);
+  });
+
+  loadState();
 </script>
 
 </body>
