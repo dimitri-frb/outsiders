@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Outsiders - Saison 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --green: #00ff88;
+    --green-dim: #00cc6a;
+    --green-dark: #004d28;
+    --green-glow: rgba(0, 255, 136, 0.15);
+    --bg: #050a08;
+    --bg-card: rgba(0, 255, 136, 0.03);
+    --text: #c8e6d0;
+    --text-dim: #5a7a62;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Share Tech Mono', monospace;
+    overflow-x: hidden;
+    cursor: default;
+    line-height: 1.7;
+  }
+
+  /* Custom cursor */
+  body, a, button { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Ccircle cx='10' cy='10' r='8' fill='none' stroke='%2300ff88' stroke-width='1.5'/%3E%3Ccircle cx='10' cy='10' r='2' fill='%2300ff88'/%3E%3C/svg%3E") 10 10, crosshair; }
+
+  /* Progress bar */
+  #progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 2px;
+    background: var(--green);
+    box-shadow: 0 0 10px var(--green), 0 0 30px var(--green-glow);
+    z-index: 1000;
+    transition: width 0.1s linear;
+  }
+
+  /* Scan line overlay */
+  body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 255, 136, 0.008) 2px,
+      rgba(0, 255, 136, 0.008) 4px
+    );
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  /* Grid background */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+      linear-gradient(rgba(0, 255, 136, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 255, 136, 0.02) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Sections */
+  section {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 40px;
+  }
+
+  .section-inner {
+    max-width: 900px;
+    width: 100%;
+    opacity: 0;
+    transform: translateY(60px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .section-inner.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Hero */
+  #hero {
+    min-height: 100vh;
+    text-align: center;
+    flex-direction: column;
+  }
+
+  #hero .section-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .hero-label {
+    font-size: 0.75rem;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    border: 1px solid var(--green-dark);
+    padding: 6px 20px;
+    display: inline-block;
+  }
+
+  .hero-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(2.5rem, 7vw, 5.5rem);
+    font-weight: 900;
+    color: var(--green);
+    text-shadow: 0 0 40px var(--green-glow), 0 0 80px rgba(0,255,136,0.08);
+    line-height: 1.1;
+    position: relative;
+  }
+
+  .hero-subtitle {
+    font-size: 1.1rem;
+    color: var(--text-dim);
+    letter-spacing: 3px;
+  }
+
+  .hero-date {
+    font-size: 0.9rem;
+    color: var(--green-dim);
+    letter-spacing: 6px;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--green-dark);
+  }
+
+  /* Section titles */
+  .section-tag {
+    font-size: 0.65rem;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: var(--green-dark);
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(1.6rem, 4vw, 2.8rem);
+    font-weight: 700;
+    color: var(--green);
+    margin-bottom: 40px;
+    text-shadow: 0 0 20px var(--green-glow);
+    position: relative;
+    display: inline-block;
+  }
+
+  /* Glitch effect */
+  .glitch {
+    animation: glitch-skew 4s infinite linear alternate-reverse;
+  }
+
+  .glitch::before,
+  .glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .glitch::before {
+    color: var(--green);
+    animation: glitch-1 0.3s infinite linear alternate-reverse;
+    clip-path: inset(0 0 80% 0);
+    opacity: 0.8;
+  }
+
+  .glitch::after {
+    color: #00ffcc;
+    animation: glitch-2 0.3s infinite linear alternate-reverse;
+    clip-path: inset(80% 0 0 0);
+    opacity: 0.8;
+  }
+
+  @keyframes glitch-1 {
+    0% { transform: translate(0); }
+    20% { transform: translate(-2px, 1px); }
+    40% { transform: translate(2px, -1px); }
+    60% { transform: translate(-1px, 2px); }
+    80% { transform: translate(1px, -2px); }
+    100% { transform: translate(0); }
+  }
+
+  @keyframes glitch-2 {
+    0% { transform: translate(0); }
+    20% { transform: translate(2px, -1px); }
+    40% { transform: translate(-2px, 1px); }
+    60% { transform: translate(1px, -2px); }
+    80% { transform: translate(-1px, 2px); }
+    100% { transform: translate(0); }
+  }
+
+  @keyframes glitch-skew {
+    0% { transform: skew(0deg); }
+    2% { transform: skew(0.5deg); }
+    4% { transform: skew(0deg); }
+    100% { transform: skew(0deg); }
+  }
+
+  /* Content blocks */
+  .content-block {
+    background: var(--bg-card);
+    border: 1px solid rgba(0, 255, 136, 0.08);
+    border-left: 2px solid var(--green-dark);
+    padding: 28px 32px;
+    margin-bottom: 20px;
+    position: relative;
+  }
+
+  .content-block::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, var(--green-dark), transparent);
+  }
+
+  .content-block h3 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.85rem;
+    color: var(--green);
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+
+  .content-block p, .content-block li {
+    color: var(--text);
+    font-size: 0.9rem;
+    line-height: 1.8;
+  }
+
+  .content-block ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .content-block ul li {
+    padding: 4px 0 4px 20px;
+    position: relative;
+  }
+
+  .content-block ul li::before {
+    content: '>';
+    position: absolute;
+    left: 0;
+    color: var(--green-dark);
+    font-weight: bold;
+  }
+
+  /* KR items */
+  .kr-item {
+    display: flex;
+    gap: 16px;
+    padding: 16px 0;
+    border-bottom: 1px solid rgba(0, 255, 136, 0.05);
+    align-items: flex-start;
+  }
+
+  .kr-item:last-child { border-bottom: none; }
+
+  .kr-label {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.7rem;
+    color: var(--green);
+    background: rgba(0, 255, 136, 0.08);
+    padding: 3px 10px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    letter-spacing: 1px;
+  }
+
+  .kr-text {
+    font-size: 0.9rem;
+    color: var(--text);
+    flex: 1;
+  }
+
+  .kr-assign {
+    flex-shrink: 0;
+  }
+
+  .kr-assign select {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.75rem;
+    background: rgba(0, 255, 136, 0.06);
+    color: var(--text-dim);
+    border: 1px solid var(--green-dark);
+    padding: 5px 10px;
+    outline: none;
+    cursor: inherit;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23004d28'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    padding-right: 24px;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .kr-assign select:hover,
+  .kr-assign select:focus {
+    border-color: var(--green-dim);
+    color: var(--green);
+  }
+
+  .kr-assign select.assigned {
+    color: var(--green);
+    border-color: var(--green-dim);
+  }
+
+  .kr-assign select option {
+    background: #0a1a10;
+    color: var(--text);
+  }
+
+  /* Role cards */
+  .roles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 16px;
+    margin-top: 20px;
+  }
+
+  .role-card {
+    background: var(--bg-card);
+    border: 1px solid rgba(0, 255, 136, 0.08);
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .role-card:hover {
+    border-color: var(--green-dark);
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.05);
+  }
+
+  .role-card .role-icon {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.65rem;
+    color: var(--green-dark);
+    letter-spacing: 3px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+
+  .role-card h4 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.9rem;
+    color: var(--green);
+    margin-bottom: 8px;
+  }
+
+  .role-card p {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  /* Tools section */
+  .tools-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .tool-card {
+    background: var(--bg-card);
+    border: 1px solid rgba(0, 255, 136, 0.08);
+    padding: 32px;
+    text-align: center;
+    transition: border-color 0.3s ease;
+  }
+
+  .tool-card:hover {
+    border-color: var(--green-dark);
+  }
+
+  .tool-card h4 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1rem;
+    color: var(--green);
+    margin-bottom: 16px;
+  }
+
+  .tool-card p {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    line-height: 1.7;
+  }
+
+  /* Retex format */
+  .retex-format {
+    background: rgba(0, 255, 136, 0.04);
+    border: 1px dashed var(--green-dark);
+    padding: 24px 28px;
+    margin-top: 20px;
+    font-size: 0.85rem;
+  }
+
+  .retex-format .retex-line {
+    padding: 6px 0;
+    color: var(--text);
+  }
+
+  .retex-format .retex-line span {
+    color: var(--green-dim);
+    margin-right: 8px;
+  }
+
+  /* Orgchart */
+  .orgchart {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .org-root {
+    background: var(--green);
+    color: var(--bg);
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 900;
+    font-size: clamp(1rem, 2.5vw, 1.3rem);
+    padding: 20px 48px;
+    text-align: center;
+    letter-spacing: 2px;
+    position: relative;
+  }
+
+  .org-line-down {
+    width: 1px;
+    height: 32px;
+    background: var(--green-dark);
+  }
+
+  .org-line-h {
+    width: 80%;
+    height: 1px;
+    background: var(--green-dark);
+  }
+
+  .org-branches {
+    display: flex;
+    width: 100%;
+    gap: 16px;
+    position: relative;
+  }
+
+  .org-branch {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .org-branch-line {
+    width: 1px;
+    height: 24px;
+    background: var(--green-dark);
+  }
+
+  .org-okr {
+    background: rgba(0, 255, 136, 0.1);
+    border: 1px solid var(--green-dark);
+    padding: 16px 12px;
+    text-align: center;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.7rem;
+    color: var(--green);
+    letter-spacing: 1px;
+    line-height: 1.5;
+    width: 100%;
+  }
+
+  .org-okr strong {
+    display: block;
+    font-size: 0.6rem;
+    color: var(--green-dim);
+    margin-bottom: 4px;
+    letter-spacing: 2px;
+  }
+
+  .org-krs {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-top: 0;
+  }
+
+  .org-kr {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .org-kr-line {
+    width: 1px;
+    height: 12px;
+    background: var(--green-dark);
+  }
+
+  .org-kr-item {
+    background: rgba(0, 255, 136, 0.03);
+    border: 1px solid rgba(0, 255, 136, 0.06);
+    padding: 8px 12px;
+    font-size: 0.62rem;
+    color: var(--text-dim);
+    line-height: 1.5;
+    text-align: center;
+    width: 100%;
+  }
+
+  @media (max-width: 700px) {
+    .org-branches { flex-direction: column; gap: 24px; }
+    .org-line-h { display: none; }
+    .org-kr-item { font-size: 0.7rem; }
+  }
+
+  /* Closing section */
+  #closing {
+    text-align: center;
+  }
+
+  #closing .section-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .closing-lines {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 40px;
+  }
+
+  .closing-lines li {
+    font-size: 1rem;
+    padding: 8px 0;
+    color: var(--text);
+    letter-spacing: 1px;
+  }
+
+  .closing-cta {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    color: var(--green);
+    font-weight: 900;
+    text-shadow: 0 0 30px var(--green-glow), 0 0 60px rgba(0,255,136,0.1);
+    margin-top: 20px;
+    letter-spacing: 4px;
+  }
+
+  /* Note callout */
+  .note {
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    font-style: italic;
+    margin-top: 16px;
+    padding-left: 16px;
+    border-left: 1px solid var(--green-dark);
+  }
+
+  /* Section divider */
+  .section-divider {
+    width: 60px;
+    height: 1px;
+    background: var(--green-dark);
+    margin: 30px 0;
+  }
+
+  /* Tour de table */
+  .questions-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .questions-list li {
+    font-size: 1.05rem;
+    color: var(--green-dim);
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(0, 255, 136, 0.06);
+    padding-left: 24px;
+    position: relative;
+  }
+
+  .questions-list li::before {
+    content: '?';
+    position: absolute;
+    left: 0;
+    color: var(--green);
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+  }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    section { padding: 60px 20px; }
+    .tools-row { grid-template-columns: 1fr; }
+    .roles-grid { grid-template-columns: 1fr; }
+    .content-block { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<!-- SECTION 1: HERO -->
+<section id="hero">
+  <div class="section-inner">
+    <div class="hero-label">Outsiders</div>
+    <h1 class="hero-title glitch" data-text="Saison 2027, To The Moon">Saison 2027, To The Moon</h1>
+    <p class="hero-subtitle">Reunion de lancement</p>
+    <p class="hero-date">Avril 2026</p>
+  </div>
+</section>
+
+<!-- SECTION 2: BILAN 2025 -->
+<section>
+  <div class="section-inner">
+    <p class="section-tag">// Bilan</p>
+    <h2 class="section-title glitch" data-text="Ce qu'on a construit">Ce qu'on a construit</h2>
+
+    <div class="content-block">
+      <h3>Points forts</h3>
+      <ul>
+        <li>Victoire(s) face aux Tacles</li>
+        <li>Premiere place au match aller</li>
+        <li>Recrutements et nouveaux &lt;3</li>
+        <li>Esprit d'equipe</li>
+        <li>Wardak en EDF &#128123;</li>
+      </ul>
+    </div>
+
+    <div class="content-block">
+      <h3>Axes d'amelioration</h3>
+      <ul>
+        <li>Cohesion interne</li>
+        <li>Connaissance roster / matrices</li>
+        <li>Regularite en ligue</li>
+        <li>Differences de preparation et d'engagement entre les membres</li>
+        <li>Coaching en amont</li>
+        <li>Integration et montee en puissance de chacun individuellement</li>
+      </ul>
+    </div>
+
+    <div class="content-block" style="border-left-color: var(--green);">
+      <h3>Conclusion</h3>
+      <p>Malgre la deception du match retour, l'objectif du maintien en L2 est atteint. Le socle est solide pour la suite. On sait ou on en est, on sait ou on va.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: VISION 2026 -->
+<section>
+  <div class="section-inner">
+    <p class="section-tag">// Vision</p>
+    <h2 class="section-title glitch" data-text="L'ambition est claire">L'ambition est claire</h2>
+
+    <div class="content-block">
+      <h3>L'objectif</h3>
+      <ul>
+        <li>Montee en L1</li>
+      </ul>
+    </div>
+
+    <div class="content-block">
+      <h3>Pourquoi maintenant</h3>
+      <p>Le timing est bon. Le roster est bon. La dynamique est bonne. Tout est aligne pour pousser.</p>
+    </div>
+
+    <div class="content-block">
+      <h3>L'esprit Outsiders</h3>
+      <p>C'est notre fil rouge. Pas de copie meta, pas de suivisme. Des concepts penses pour gagner, a notre maniere. On joue comme personne d'autre ne joue.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 4: PYRAMID -->
+<section>
+  <div class="section-inner">
+    <p class="section-tag">// Roadmap</p>
+    <h2 class="section-title glitch" data-text="La strategie">La strategie</h2>
+
+    <div class="orgchart">
+      <div class="org-root">Montee en L1</div>
+      <div class="org-line-down"></div>
+      <div class="org-line-h"></div>
+      <div class="org-branches">
+        <div class="org-branch">
+          <div class="org-branch-line"></div>
+          <div class="org-okr"><strong>OKR 1</strong>Un roster d'elite a 14</div>
+          <div class="org-krs">
+            <div class="org-kr">
+              <div class="org-kr-line"></div>
+              <div class="org-kr-item">Roles et responsabilites</div>
+              <div class="org-kr-line"></div>
+              <div class="org-kr-item">Recrutement</div>
+              <div class="org-kr-line"></div>
+              <div class="org-kr-item">Integration et formation</div>
+              <div class="org-kr-line"></div>
+              <div class="org-kr-item">Coach externe</div>
+            </div>
+          </div>
+        </div>
+        <div class="org-branch">
+          <div class="org-branch-line"></div>
+          <div class="org-okr"><strong>OKR 2</strong>Tout le monde progresse</div>
+          <div class="org-krs">
+            <div class="org-kr">
+              <div class="org-kr-line"></div>
+              <div class="org-kr-item">Retex 100%</div>
+              <div class="org-kr-line"></div>
+              <div class="org-kr-item">2 trainings / mois</div>
+              <div class="org-kr-line"></div>
+              <div class="org-kr-item">2 parties internes / mois</div>
+              <div class="org-kr-line"></div>
+              <div class="org-kr-item">1 tournoi / mois chacun</div>
+            </div>
+          </div>
+        </div>
+        <div class="org-branch">
+          <div class="org-branch-line"></div>
+          <div class="org-okr"><strong>OKR 3</strong>Une identite forte</div>
+          <div class="org-krs">
+            <div class="org-kr">
+              <div class="org-kr-line"></div>
+              <div class="org-kr-item">Identite visuelle</div>
+              <div class="org-kr-line"></div>
+              <div class="org-kr-item">Merch</div>
+              <div class="org-kr-line"></div>
+              <div class="org-kr-item">Discord</div>
+              <div class="org-kr-line"></div>
+              <div class="org-kr-item">Outils internes</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 5: OKR 1 -->
+<section>
+  <div class="section-inner">
+    <p class="section-tag">// OKR 1</p>
+    <h2 class="section-title">Un roster d'elite a 14</h2>
+
+    <div class="content-block">
+      <h3>Key Results</h3>
+      <div class="kr-item">
+        <span class="kr-label">KR1</span>
+        <span class="kr-text">Chacun a un role et des responsabilites cle dans la team</span>
+        <div class="kr-assign"><select onchange="this.classList.toggle('assigned',this.value)"><option value="">--</option><option>Anrakyr</option><option>Cytrik</option><option>Immortus</option><option>Kharn</option><option>Mani</option><option>Nazara</option><option>Night</option><option>Omegon</option><option>Peegee</option><option>Toyo</option><option>Wardak</option></select></div>
+      </div>
+      <div class="kr-item">
+        <span class="kr-label">KR2</span>
+        <span class="kr-text">Recruter X nouveaux membres pour la saison prochaine</span>
+        <div class="kr-assign"><select onchange="this.classList.toggle('assigned',this.value)"><option value="">--</option><option>Anrakyr</option><option>Cytrik</option><option>Immortus</option><option>Kharn</option><option>Mani</option><option>Nazara</option><option>Night</option><option>Omegon</option><option>Peegee</option><option>Toyo</option><option>Wardak</option></select></div>
+      </div>
+      <div class="kr-item">
+        <span class="kr-label">KR3</span>
+        <span class="kr-text">Mettre en place un process d'integration et de formation des nouveaux</span>
+        <div class="kr-assign"><select onchange="this.classList.toggle('assigned',this.value)"><option value="">--</option><option>Anrakyr</option><option>Cytrik</option><option>Immortus</option><option>Kharn</option><option>Mani</option><option>Nazara</option><option>Night</option><option>Omegon</option><option>Peegee</option><option>Toyo</option><option>Wardak</option></select></div>
+      </div>
+      <div class="kr-item">
+        <span class="kr-label">KR4</span>
+        <span class="kr-text">Trouver un coach externe et focus sur ce role</span>
+        <div class="kr-assign"><select onchange="this.classList.toggle('assigned',this.value)"><option value="">--</option><option>Anrakyr</option><option>Cytrik</option><option>Immortus</option><option>Kharn</option><option>Mani</option><option>Nazara</option><option>Night</option><option>Omegon</option><option>Peegee</option><option>Toyo</option><option>Wardak</option></select></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 6: ROLES -->
+<section>
+  <div class="section-inner">
+    <p class="section-tag">// Roles</p>
+    <h2 class="section-title">Chacun a sa place</h2>
+
+    <div class="roles-grid">
+      <div class="role-card">
+        <div class="role-icon">[ 01 ]</div>
+        <h4>Joueur Try Hard</h4>
+        <p>Focus jeu et resultats. Le coeur du roster competitif.</p>
+      </div>
+      <div class="role-card">
+        <div class="role-icon">[ 02 ]</div>
+        <h4>Coach</h4>
+        <p>Analyse et accompagnement. Lecture du jeu et strategie.</p>
+      </div>
+      <div class="role-card">
+        <div class="role-icon">[ 03 ]</div>
+        <h4>Formateur</h4>
+        <p>Training des nouveaux. Transmission du savoir-faire.</p>
+      </div>
+      <div class="role-card">
+        <div class="role-icon">[ 04 ]</div>
+        <h4>Organisateur Scrims</h4>
+        <p>Planning et coordination. Le lien logistique de l'equipe.</p>
+      </div>
+      <div class="role-card">
+        <div class="role-icon">[ 05 ]</div>
+        <h4>Responsable Merch</h4>
+        <p>Identite visuelle et goodies. L'image des Outsiders.</p>
+      </div>
+    </div>
+
+    <p class="note">Roles cumulables et evolutifs. Un joueur peut porter plusieurs casquettes.</p>
+  </div>
+</section>
+
+<!-- SECTION 7: OKR 2 -->
+<section>
+  <div class="section-inner">
+    <p class="section-tag">// OKR 2</p>
+    <h2 class="section-title">Tout le monde progresse</h2>
+
+    <div class="content-block">
+      <h3>Key Results</h3>
+      <div class="kr-item">
+        <span class="kr-label">KR1</span>
+        <span class="kr-text">100% des parties ont un retex poste sur Discord</span>
+        <div class="kr-assign"><select onchange="this.classList.toggle('assigned',this.value)"><option value="">--</option><option>Anrakyr</option><option>Cytrik</option><option>Immortus</option><option>Kharn</option><option>Mani</option><option>Nazara</option><option>Night</option><option>Omegon</option><option>Peegee</option><option>Toyo</option><option>Wardak</option></select></div>
+      </div>
+      <div class="kr-item">
+        <span class="kr-label">KR2</span>
+        <span class="kr-text">Organiser au moins deux sessions de training par mois</span>
+        <div class="kr-assign"><select onchange="this.classList.toggle('assigned',this.value)"><option value="">--</option><option>Anrakyr</option><option>Cytrik</option><option>Immortus</option><option>Kharn</option><option>Mani</option><option>Nazara</option><option>Night</option><option>Omegon</option><option>Peegee</option><option>Toyo</option><option>Wardak</option></select></div>
+      </div>
+      <div class="kr-item">
+        <span class="kr-label">KR3</span>
+        <span class="kr-text">Au moins deux parties entre membres par mois</span>
+        <div class="kr-assign"><select onchange="this.classList.toggle('assigned',this.value)"><option value="">--</option><option>Anrakyr</option><option>Cytrik</option><option>Immortus</option><option>Kharn</option><option>Mani</option><option>Nazara</option><option>Night</option><option>Omegon</option><option>Peegee</option><option>Toyo</option><option>Wardak</option></select></div>
+      </div>
+      <div class="kr-item">
+        <span class="kr-label">KR4</span>
+        <span class="kr-text">Chacun participe au moins a un tournoi par mois</span>
+        <div class="kr-assign"><select onchange="this.classList.toggle('assigned',this.value)"><option value="">--</option><option>Anrakyr</option><option>Cytrik</option><option>Immortus</option><option>Kharn</option><option>Mani</option><option>Nazara</option><option>Night</option><option>Omegon</option><option>Peegee</option><option>Toyo</option><option>Wardak</option></select></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 8: RETEX -->
+<section>
+  <div class="section-inner">
+    <p class="section-tag">// Culture</p>
+    <h2 class="section-title glitch" data-text="On apprend de chaque partie">On apprend de chaque partie</h2>
+
+    <div class="content-block">
+      <h3>La regle</h3>
+      <p>Toute partie jouee = un retex sur Discord. Pas d'exception.</p>
+    </div>
+
+    <div class="retex-format">
+      <div class="retex-line"><span>&gt;</span> Resultat</div>
+      <div class="retex-line"><span>&gt;</span> Moment cle</div>
+      <div class="retex-line"><span>&gt;</span> Ce que j'aurais du faire</div>
+      <div class="retex-line"><span>&gt;</span> Ce que je retiens</div>
+    </div>
+
+    <div class="content-block" style="margin-top: 20px;">
+      <h3>Pourquoi</h3>
+      <ul>
+        <li>Memoire collective</li>
+        <li>Progression acceleree</li>
+        <li>Cohesion renforcee</li>
+      </ul>
+    </div>
+
+    <p class="note">Le retex n'est pas un jugement, c'est un outil.</p>
+  </div>
+</section>
+
+<!-- SECTION 9: OKR 3 -->
+<section>
+  <div class="section-inner">
+    <p class="section-tag">// OKR 3</p>
+    <h2 class="section-title">Les Outsiders, une identite</h2>
+
+    <div class="content-block">
+      <h3>Key Results</h3>
+      <div class="kr-item">
+        <span class="kr-label">KR1</span>
+        <span class="kr-text">Refaire l'identite visuelle : logo, couleurs, charte, etc</span>
+        <div class="kr-assign"><select onchange="this.classList.toggle('assigned',this.value)"><option value="">--</option><option>Anrakyr</option><option>Cytrik</option><option>Immortus</option><option>Kharn</option><option>Mani</option><option>Nazara</option><option>Night</option><option>Omegon</option><option>Peegee</option><option>Toyo</option><option>Wardak</option></select></div>
+      </div>
+      <div class="kr-item">
+        <span class="kr-label">KR2</span>
+        <span class="kr-text">Lancer le merch : maillots, casquettes, des, tapis, etc</span>
+        <div class="kr-assign"><select onchange="this.classList.toggle('assigned',this.value)"><option value="">--</option><option>Anrakyr</option><option>Cytrik</option><option>Immortus</option><option>Kharn</option><option>Mani</option><option>Nazara</option><option>Night</option><option>Omegon</option><option>Peegee</option><option>Toyo</option><option>Wardak</option></select></div>
+      </div>
+      <div class="kr-item">
+        <span class="kr-label">KR3</span>
+        <span class="kr-text">Revoir l'organisation du Discord</span>
+        <div class="kr-assign"><select onchange="this.classList.toggle('assigned',this.value)"><option value="">--</option><option>Anrakyr</option><option>Cytrik</option><option>Immortus</option><option>Kharn</option><option>Mani</option><option>Nazara</option><option>Night</option><option>Omegon</option><option>Peegee</option><option>Toyo</option><option>Wardak</option></select></div>
+      </div>
+      <div class="kr-item">
+        <span class="kr-label">KR4</span>
+        <span class="kr-text">Creer des outils pour progresser et aller plus vite</span>
+        <div class="kr-assign"><select onchange="this.classList.toggle('assigned',this.value)"><option value="">--</option><option>Anrakyr</option><option>Cytrik</option><option>Immortus</option><option>Kharn</option><option>Mani</option><option>Nazara</option><option>Night</option><option>Omegon</option><option>Peegee</option><option>Toyo</option><option>Wardak</option></select></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 10: OUTILS -->
+<section>
+  <div class="section-inner">
+    <p class="section-tag">// Outils</p>
+    <h2 class="section-title">On s'organise comme des pros</h2>
+
+    <div class="tools-row">
+      <div class="tool-card">
+        <h4>Pairings</h4>
+        <p>Gestion des appariements. Utilise par le capitaine pour optimiser les matchups table par table.</p>
+      </div>
+      <div class="tool-card">
+        <h4>Suivi Estimes</h4>
+        <p>Scores estimes table par table en temps reel. Ajuster la strategie en cours de match.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 11: CLOSING -->
+<section id="closing">
+  <div class="section-inner">
+    <p class="section-tag">// Closing</p>
+    <h2 class="section-title glitch" data-text="Ca commence maintenant">Ca commence maintenant</h2>
+
+    <ul class="closing-lines">
+      <li>On prepare la nouvelle saison.</li>
+      <li>Un seul objectif : la L1.</li>
+      <li>Chaque partie compte.</li>
+      <li>Chaque retex compte.</li>
+      <li>Chaque training compte.</li>
+    </ul>
+
+    <div class="section-divider" style="margin: 30px auto;"></div>
+
+    <div class="closing-cta glitch" data-text="LET'S GO OUTSIDERS">LET'S GO OUTSIDERS</div>
+  </div>
+</section>
+
+<!-- SECTION 12: TOUR DE TABLE -->
+<section>
+  <div class="section-inner">
+    <p class="section-tag">// Tour de table</p>
+    <h2 class="section-title glitch" data-text="Et toi, t'es ou ?">Et toi, t'es ou ?</h2>
+
+    <ul class="questions-list">
+      <li>La vision te parle ?</li>
+      <li>A quel niveau tu veux t'engager ?</li>
+      <li>Quel role te correspond ?</li>
+    </ul>
+
+    <div class="content-block" style="margin-top: 30px; text-align: center;">
+      <p>Objectif : tout le monde repart avec une case claire.</p>
+    </div>
+  </div>
+</section>
+
+<div style="height: 80px;"></div>
+
+<script>
+  // Progress bar
+  const progress = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollPercent = (scrollTop / docHeight) * 100;
+    progress.style.width = scrollPercent + '%';
+  });
+
+  // IntersectionObserver for reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, {
+    threshold: 0.15,
+    rootMargin: '0px 0px -50px 0px'
+  });
+
+  document.querySelectorAll('.section-inner').forEach(el => {
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>
