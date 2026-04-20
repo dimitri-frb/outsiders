@@ -873,6 +873,42 @@
     .recap-kr-assign select { flex: 1; }
   }
 
+  /* Modal */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+  }
+
+  .modal-overlay img {
+    max-width: 95%;
+    max-height: 90vh;
+    border: 1px solid var(--green-dark);
+    box-shadow: 0 0 40px var(--green-glow);
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 20px; right: 30px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.2rem;
+    color: var(--green);
+    cursor: pointer;
+    background: none;
+    border: 1px solid var(--green-dark);
+    padding: 6px 14px;
+    transition: background 0.2s;
+  }
+
+  .modal-close:hover {
+    background: rgba(0,255,136,0.1);
+  }
+
   /* Responsive */
   @media (max-width: 600px) {
     section { padding: 60px 20px; }
@@ -1191,11 +1227,10 @@
     <h2 class="section-title">On s'organise comme des pros</h2>
 
     <div class="tools-row">
-      <a class="tool-card" href="https://dimitri-frb.github.io/outsiders-matrice/" target="_blank" style="text-decoration:none;cursor:inherit;">
+      <div class="tool-card" onclick="document.getElementById('matrice-modal').style.display='flex'" style="cursor:pointer;">
         <h4>Matrice 2.0</h4>
         <p>Un outil pour faire les matrices en préparation des events.</p>
-        <img src="img/matrice.png" alt="Matrice 2.0 - Aperçu" style="width:100%;margin-top:16px;border:1px solid var(--green-dark);border-radius:4px;opacity:0.85;filter:brightness(0.9);transition:opacity 0.3s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.85" onerror="this.style.display='none'">
-      </a>
+      </div>
       <div class="tool-card">
         <h4>Suivi des games</h4>
         <p>Un outil pour suivre les games, la perf et alimenter la master matrice en temps réel.</p>
@@ -1243,7 +1278,7 @@
     <div id="recap-container" style="margin-top: 40px;"></div>
 
     <div class="content-block" style="margin-top: 30px; text-align: center;">
-      <p>Objectif : tout le monde repart avec une case claire.</p>
+      <p>Objectif : tout le monde repart avec des rôles clairs.</p>
     </div>
   </div>
 </section>
@@ -1263,6 +1298,11 @@
     <div class="players-grid" id="new-roster-grid"></div>
   </div>
 </section>
+
+<div id="matrice-modal" class="modal-overlay" onclick="if(event.target===this)this.style.display='none'">
+  <button class="modal-close" onclick="document.getElementById('matrice-modal').style.display='none'">✕</button>
+  <img src="img/matrice.png" alt="Matrice 2.0">
+</div>
 
 <div style="height: 80px;"></div>
 
