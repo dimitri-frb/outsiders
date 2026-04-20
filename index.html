@@ -1254,6 +1254,12 @@
     <h2 class="section-title glitch" data-text="Les Outsiders">Les Outsiders</h2>
 
     <div class="players-grid" id="roster-grid"></div>
+
+    <div class="section-divider" style="margin: 50px auto 30px;"></div>
+
+    <h3 style="font-family:'Orbitron',sans-serif;font-size:1.1rem;color:var(--green);letter-spacing:2px;margin-bottom:24px;text-align:center;">Les nouveaux Outsiders</h3>
+
+    <div class="players-grid" id="new-roster-grid"></div>
   </div>
 </section>
 
@@ -1290,7 +1296,6 @@
     {name:'Anrakyr', img:'img/anrakyr.jpeg'},
     {name:'Cytrik', img:'img/blood-angel.jpg'},
     {name:'Immortus', img:'img/astra.jpeg'},
-    {name:'Junkei', img:''},
     {name:'Kharn', img:'img/belakor.webp'},
     {name:'Mani', img:'img/death-guard.jpeg'},
     {name:'Nazara', img:'img/admech.webp'},
@@ -1315,8 +1320,24 @@
     grid.appendChild(card);
   });
 
+  // Build new Outsiders cards
+  const newMembers = [
+    {name:'Junkei', desc:'Joueur Votann L2'},
+    {name:'Castreur Fou', desc:'CSM / EC L2 (embuscade)'},
+    {name:'Kthelmir', desc:'WE / CSM (L3 → L2)'},
+    {name:'Oxawa', desc:'Coach motivation, transport et sieste'},
+    {name:'Salysia', desc:'Coach ?'}
+  ];
+  const newGrid = document.getElementById('new-roster-grid');
+  newMembers.forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'player-card';
+    card.innerHTML = `<div class="player-photo-placeholder">?</div><h4>${p.name}</h4><div style="font-size:0.7rem;color:var(--text-dim);line-height:1.5;margin-top:6px;">${p.desc}</div>`;
+    newGrid.appendChild(card);
+  });
+
   // Build recap in "Et toi, t'es où ?"
-  const memberNames = ['Anrakyr','Cytrik','Immortus','Junkei','Kharn','Mani','Nazara','Night','Omegon','Peegee','Toyo','Wardak'];
+  const memberNames = ['Anrakyr','Castreur Fou','Cytrik','Immortus','Kharn','Kthelmir','Mani','Nazara','Night','Omegon','Oxawa','Peegee','Salysia','Toyo','Wardak'];
   const memberOpts = memberNames.map(n => `<option>${n}</option>`).join('');
   const selTpl = `<select class="recap-sel" onchange="this.classList.toggle('assigned',!!this.value);saveState()"><option value="">--</option>${memberOpts}</select>`;
 
